@@ -40,6 +40,7 @@
     Discourse.Dialect.registerEmoji(emoji.name, emoji.url);
   });
   Discourse.Router = Ember.Router.extend({ location: 'discourse-location' });
+  Discourse.Router.reopen({rootURL: Discourse.BaseUri});
   Discourse.Route.mapRoutes();
   Discourse.start();
   Discourse.set('assetVersion','<%= Discourse.assets_digest %>');
