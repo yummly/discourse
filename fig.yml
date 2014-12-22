@@ -8,9 +8,9 @@ redis:
     - "6379"
   volumes:
     - tmp/redis/data/:/data
-web:
+discourse:
   build: .
-  command: bash -c 'rm -f /var/www/discourse/tmp/pids/server.pid && bundle exec rails server'
+  command: bash -c 'rm -f /var/www/discourse/tmp/pids/server.pid && echo $RAILS_RELATIVE_URL_ROOT > /var/www/discourse/tmp/root && bundle exec rails server'
   volumes:
     - .:/var/www/discourse
   ports:
@@ -32,3 +32,12 @@ web:
     DISCOURSE_HOSTNAME: 192.168.59.103:3000
     # because we are not using nginx
     DISCOURSE_SERVE_STATIC_ASSETS: true
+nginx:
+  image: nginx:1.7.8
+  ports:
+    - "80:80"
+  volumes_from:
+    - discourse
+  links:
+    - discourse
+  command: bash -evx /var/www/discourse/config/nginx-docker-start.sh
