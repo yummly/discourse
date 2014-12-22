@@ -24,6 +24,7 @@ discourse:
     RAILS_RELATIVE_URL_ROOT: /discuss
     # DB settings apply only if RAILS_ENV is production
     # else edit database.yml
+    # DISCOURSE_CDN_URL:
     DISCOURSE_DB_HOST: db
     DISCOURSE_DB_USERNAME: postgres
     DISCOURSE_DB_NAME: discourse_development
