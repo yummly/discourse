@@ -5,6 +5,8 @@ ADD . /opt/discourse
 WORKDIR /opt/discourse
 RUN mkdir -p /var/log && rm -rf log && ln -sf /var/log log
 
+VOLUME ["/opt/discourse"]
+
 RUN bundle install
 
 # RUN RAILS_ENV=production bundle exec rake assets:precompile
