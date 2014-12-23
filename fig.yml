@@ -10,9 +10,9 @@ redis:
     - tmp/redis/data/:/data
 discourse:
   build: .
-  command: bash -c 'rm -f /var/www/discourse/tmp/pids/server.pid && echo $RAILS_RELATIVE_URL_ROOT > /var/www/discourse/tmp/root && bundle exec rails server'
+  command: bash -c 'rm -f /opt/discourse/tmp/pids/server.pid && echo $RAILS_RELATIVE_URL_ROOT > /opt/discourse/tmp/root && bundle exec rails server'
   volumes:
-    - .:/var/www/discourse
+    - .:/opt/discourse
   ports:
     - "3000:3000"
   links:
@@ -41,4 +41,4 @@ nginx:
     - discourse
   links:
     - discourse
-  command: bash -evx /var/www/discourse/config/nginx-docker-start.sh
+  command: bash -evx /opt/discourse/config/nginx-docker-start.sh
