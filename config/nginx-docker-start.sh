@@ -16,4 +16,6 @@ cat $discourse/config/nginx.sample.conf |
     sed "s|location / |location $root |" |
     sed 's/root \$public;/alias $public;/' > /etc/nginx/conf.d/discourse.conf
 
+cp $discourse/config/nginx.crt $discourse/config/nginx.key /etc/nginx/
+
 exec nginx -g 'daemon off;'
