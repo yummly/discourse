@@ -7,7 +7,7 @@ root=`cat $discourse/tmp/root`
 
 rm -f /etc/nginx/sites-enabled/default
 rm -f /etc/nginx/conf.d/*
-mkdir -p /var/nginx/cache
+mkdir -p /var/nginx/cache /var/run /var/log/nginx
 
 cat $discourse/config/nginx.sample.conf |
     sed 's|server unix:/var/www/discourse/tmp/sockets/thin.[0-9]*.sock;|server discourse:3000;|' |
