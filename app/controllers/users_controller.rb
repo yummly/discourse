@@ -374,7 +374,6 @@ class UsersController < ApplicationController
 
   def activate_account
     expires_now
-    render layout: 'no_js'
   end
 
   def perform_account_activation

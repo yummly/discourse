@@ -10,7 +10,7 @@ redis:
     - tmp/redis/data/:/data
 discourse:
   build: .
-  command: bash -c 'rm -f /opt/discourse/tmp/pids/server.pid && echo $RAILS_RELATIVE_URL_ROOT > /opt/discourse/tmp/root && bundle exec rails server'
+  command: bash -c 'rm -f /opt/discourse/tmp/pids/server.pid && echo $RAILS_RELATIVE_URL_ROOT > /opt/discourse/tmp/root && bundle exec config/unicorn_launcher -c config/unicorn.conf.rb'
   volumes:
     - .:/opt/discourse
   ports:
