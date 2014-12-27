@@ -1,42 +1,52 @@
 <div id='simple-container'>
-    <h2><%= t 'activation.welcome_to', site_name: SiteSetting.title %></h2>
-    <br/>
-    <button class='btn' id='activate-account-button'><%= t 'activation.action' %></button>
+  <h2><%= t 'activation.welcome_to', site_name: SiteSetting.title %></h2>
+  <br/>
+  <button class='btn' id='activate-account-button'><%= t 'activation.action' %></button>
 
-    <%= form_tag(perform_activate_account_path, method: :put, id: 'activate-account-form') do %>
-      <%= hidden_field_tag 'password_confirmation' %>
-      <%= hidden_field_tag 'challenge' %>
-    <% end %>
+  <%= form_tag(perform_activate_account_path, method: :put, id: 'activate-account-form') do %>
+    <%= hidden_field_tag 'password_confirmation' %>
+    <%= hidden_field_tag 'challenge' %>
+  <% end %>
 </div>
 
 <%- content_for(:no_js_head) do %>
+  <%= script "preload_store" %>
+  <%= script "locales/#{I18n.locale}" %>
   <%= script "vendor" %>
+  <%= script "application" %>
+  <%- if staff? %>
+    <%= script "admin"%>
+  <%- end %>
+
+  <%= render_google_universal_analytics_code %>
+
 <%- end %>
 
-<%= render :partial => "common/discourse_javascript_config" %>
+<%= render :partial => "common/discourse_javascript" %>
 
 <script language="javascript">
-  (function() {
-    function activateAccount() {
-      $('#activate-account-button').prop('disabled', true);
-      $.ajax("/users/hp").then(function(hp) {
-        $('#password_confirmation').val(hp.value);
-        $('#challenge').val(hp.challenge.split("").reverse().join(""));
-        $('#activate-account-form').submit();
-      }).fail(function() {
-        $('#activate-account-button').prop('disabled', false);
-      });
-    }
+ (function() {
+   function activateAccount() {
+     $('#activate-account-button').prop('disabled', true);
+     Discourse.ajax("/users/hp").then(function(hp) {
+       $('#password_confirmation').val(hp.value);
+       $('#challenge').val(hp.challenge.split("").reverse().join(""));
+       $('#activate-account-form').submit();
+     }).fail(function() {
+       $('#activate-account-button').prop('disabled', false);
+     });
+   }
 
-    var t0 = new Date().getTime();
-    $('#activate-account-button').on('click', function() {
-      var diff = new Date().getTime() - t0;
+   var t0 = new Date().getTime();
+   $('#activate-account-button').on('click', function() {
+     var diff = new Date().getTime() - t0;
 
-      // Ensure the form has been visible for a few ms before allowing the
-      // user to submit.
-      if (diff > 50) {
-        activateAccount();
-      }
-    });
-  })();
+     // Ensure the form has been visible for a few ms before allowing the
+     // user to submit.
+     if (diff > 50) {
+       activateAccount();
+     }
+   });
+ })();
 </script>
+<%= render_google_analytics_code %>
