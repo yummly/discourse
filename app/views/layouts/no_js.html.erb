@@ -18,11 +18,11 @@
           <div class="contents">
             <div class="row">
               <div class="title span13">
-                <a href="/"><img src="<%=SiteSetting.logo_url%>" alt="<%=SiteSetting.title%>" id="site-logo"></a>
+                <a href="#{Discourse.base_uri}/"><img src="<%=SiteSetting.logo_url%>" alt="<%=SiteSetting.title%>" id="site-logo"></a>
               </div>
               <% unless current_user %>
                 <div class='panel clearfix'>
-                  <a href="/login" class='btn btn-primary btn-small'><i class="fa fa-user"></i><%= I18n.t('log_in') %></a>
+                  <a href="#{Discourse.base_uri}/login" class='btn btn-primary btn-small'><i class="fa fa-user"></i><%= I18n.t('log_in') %></a>
                 </div>
               <% end %>
             </div>
