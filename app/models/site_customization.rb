@@ -193,7 +193,7 @@ class SiteCustomization < ActiveRecord::Base
   end
 
   def link_css_tag(href)
-    href = (GlobalSetting.cdn_url ? GlobalSetting.cdn_url : Discourse.base_url).sub(/\/+$/,'') + href
+    href = (GlobalSetting.cdn_url ? GlobalSetting.cdn_url : Discourse.base_uri).sub(/\/+$/,'') + href
     %Q{<link class="custom-css" rel="stylesheet" href="#{href}" type="text/css" media="all">}
   end
 end
