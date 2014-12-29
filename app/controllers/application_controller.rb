@@ -370,7 +370,7 @@ class ApplicationController < ActionController::Base
     end
 
     def block_if_readonly_mode
-      return if request.fullpath.start_with?("/admin/backups")
+      return if request.fullpath.start_with?("#{Discourse.base_uri}/admin/backups")
       raise Discourse::ReadOnly.new if !request.get? && Discourse.readonly_mode?
     end
 
