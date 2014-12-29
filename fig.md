@@ -12,5 +12,6 @@ This configuration doesn't use nginx.
 4. `fig run web bundle exec rake db:create db:migrate db:test:prepare db:seed_fu`
 5. `fig up`
 6. The server should be up.
+7. To run tests: `fig run web rake test`
 
 You can edit the source code as usual and it will be reflected in the running server (no need to rebuild, restart, or attach to the docker container).
