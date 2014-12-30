@@ -448,9 +448,12 @@ Discourse.User.reopenClass(Discourse.Singleton, {
 
   avatarTemplate: function(username, uploadedAvatarId) {
     var url;
+    console.log("Discourse Base Uri: ", Discourse.BaseUri);
+    var base = Discourse.BaseUri === '/' ? '' : Discourse.BaseUri;
+    console.log("new base: ", base);
     if (uploadedAvatarId) {
-      url = "/user_avatar/" +
-            Discourse.BaseUrl +
+      url = "/discuss/user_avatar" +
+            base +
             "/" +
             username.toLowerCase() +
             "/{size}/" +
@@ -461,11 +464,13 @@ Discourse.User.reopenClass(Discourse.Singleton, {
             "/{size}/" +
             Discourse.LetterAvatarVersion + ".png";
     }
-
+    console.log('before: ', url);
     url = Discourse.getURL(url);
     if (Discourse.CDN) {
+      console.log('using cdn! ', Discourse.CDN);
       url = Discourse.CDN + url;
     }
+    console.log('after: ', url);
     return url;
   },
 
