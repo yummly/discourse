@@ -448,9 +448,11 @@ Discourse.User.reopenClass(Discourse.Singleton, {
 
   avatarTemplate: function(username, uploadedAvatarId) {
     var url;
+    var base = Discourse.BaseUri === '/' ? '' : Discourse.BaseUri;
     if (uploadedAvatarId) {
-      url = "/user_avatar/" +
-            Discourse.BaseUrl +
+      url = base +
+           "/user_avatar" +
+            base +
             "/" +
             username.toLowerCase() +
             "/{size}/" +
@@ -461,7 +463,6 @@ Discourse.User.reopenClass(Discourse.Singleton, {
             "/{size}/" +
             Discourse.LetterAvatarVersion + ".png";
     }
-
     url = Discourse.getURL(url);
     if (Discourse.CDN) {
       url = Discourse.CDN + url;
