@@ -9,13 +9,9 @@
   <% end %>
 </div>
 
-<<<<<<< HEAD
 <%- content_for(:no_ember_head) do %>
-=======
-<%- content_for(:no_js_head) do %>
   <%= script "preload_store" %>
   <%= script "locales/#{I18n.locale}" %>
->>>>>>> copied js initialization code into acivate-account
   <%= script "vendor" %>
   <%= script "application" %>
   <%- if staff? %>
