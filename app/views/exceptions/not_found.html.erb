@@ -9,7 +9,7 @@
       <span style="line-height:2;"><%= link_to t.title, t.relative_url %><% if !t.category.uncategorized? %>&nbsp;&nbsp;<a href="<%= t.category.url %>" class="badge badge-category" style="background-color: #<%= t.category.color %>; color: #<%= t.category.text_color %>"><%= t.category.name %></a><% end %></span><br/>
     <% end %>
     <br/>
-    <a href="#{Discourse.base_uri}/latest" class="btn"><%= t 'page_not_found.see_more' %>&hellip;</a>
+    <a href="<%= Discourse.base_uri %>/latest" class="btn"><%= t 'page_not_found.see_more' %>&hellip;</a>
   </div>
   <div class="span8 recent-topics">
     <h2 class="recent-topics-title"><%= t 'page_not_found.recent_topics' %></h2>
@@ -17,7 +17,7 @@
       <span style="line-height:2;"><%= link_to t.title, t.relative_url %><% if !t.category.uncategorized? %>&nbsp;&nbsp;<a href="<%= t.category.url %>" class="badge badge-category" style="background-color: #<%= t.category.color %>; color: #<%= t.category.text_color %>"><%= t.category.name %></a><% end %></span><br/>
     <% end %>
     <br/>
-    <a href="#{Discourse.base_uri}/latest" class="btn"><%= t 'page_not_found.see_more' %>&hellip;</a>
+    <a href="<%= Discourse.base_uri %>/latest" class="btn"><%= t 'page_not_found.see_more' %>&hellip;</a>
   </div>
 </div>
 

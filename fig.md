@@ -9,7 +9,7 @@ This configuration doesn't use nginx.
 1. [Install fig](http://www.fig.sh/install.html)
 2. Check `fig.yml`, you may need to edit it.
 3. `fig build`
-4. `fig run web bundle exec rake db:create db:migrate db:test:prepare db:seed_fu`
+4. `fig run discourse bundle exec rake db:create db:migrate db:test:prepare db:seed_fu`
 5. `fig up`
 6. The server should be up.
 7. To run tests: `fig run web rake test`
