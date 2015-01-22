@@ -6,8 +6,9 @@ redis:
   image: redis:2.8
   ports:
     - "6379"
-  volumes:
-    - tmp/redis/data/:/data
+  # volumes:
+  #   - tmp/redis/data/:/data
+  # command: redis-server --appendonly yes
 discourse:
   build: .
   command: bash -c 'rm -f /opt/discourse/tmp/pids/server.pid && echo $RAILS_RELATIVE_URL_ROOT > /opt/discourse/tmp/root && bundle exec config/unicorn_launcher -E $RAILS_ENV -c config/unicorn.conf.rb'
@@ -31,8 +32,8 @@ discourse:
     # on linux, change this to 127.0.0.1:3000
     # on mac, use `boot2docker ip` to find your ip
     DISCOURSE_HOSTNAME: 192.168.59.103:3000
-    # because we are not using nginx
-    DISCOURSE_SERVE_STATIC_ASSETS: true
+    # set to true if not using nginx
+    DISCOURSE_SERVE_STATIC_ASSETS: false
 nginx:
   image: nginx:1.7.8
   ports:

@@ -21,6 +21,9 @@ development:
 test:
   adapter: postgresql
   database: discourse_test
+  host: db
+  username: postgres
+
   min_messages: warning
   pool: 5
   timeout: 5000
