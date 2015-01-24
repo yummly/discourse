@@ -16,12 +16,12 @@ RUN curl http://apt.postgresql.org/pub/repos/apt/ACCC4CF8.asc | apt-key add - &&
       tar -xjf jemalloc-3.4.1.tar.bz2 && cd jemalloc-3.4.1 && ./configure && make &&\
       mv lib/libjemalloc.so.1 /usr/lib && cd / && rm -rf /jemalloc &&\
     /usr/sbin/locale-gen en_US &&\
-    wget https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-1.9.8-linux-x86_64.tar.bz2 &&\
+    curl -sLO https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-1.9.8-linux-x86_64.tar.bz2 &&\
       tar -xjf phantomjs-1.9.8-linux-x86_64.tar.bz2 &&\
       rm phantomjs-1.9.8-linux-x86_64.tar.bz2 &&\
       cp phantomjs-1.9.8-linux-x86_64/bin/phantomjs /bin/phantomjs &&\
       rm -fr phantomjs-1.9.8-linux-x86_64 &&\
-    wget http://static.jonof.id.au/dl/kenutils/pngout-20130221-linux.tar.gz &&\
+    curl -sLO http://static.jonof.id.au/dl/kenutils/pngout-20130221-linux.tar.gz &&\
       tar -xf pngout-20130221-linux.tar.gz &&\
       rm pngout-20130221-linux.tar.gz &&\
       cp pngout-20130221-linux/x86_64/pngout /bin/pngout &&\
