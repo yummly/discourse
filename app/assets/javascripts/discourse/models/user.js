@@ -452,7 +452,8 @@ Discourse.User.reopenClass(Discourse.Singleton, {
             "/{size}/" +
             uploadedAvatarId + ".png";
     } else {
-      url = "/letter_avatar/" +
+      url = base +
+            "/letter_avatar/" +
             username.toLowerCase() +
             "/{size}/" +
             Discourse.LetterAvatarVersion + ".png";
