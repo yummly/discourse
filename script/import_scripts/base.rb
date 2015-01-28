@@ -11,12 +11,18 @@ if ARGV.include?('bbcode-to-md')
   require 'ruby-bbcode-to-md'
 end
 
+require_dependency 'url_helper'
+require_dependency 'file_helper'
+
+
 module ImportScripts; end
 
 class ImportScripts::Base
 
+  include ActionView::Helpers::NumberHelper
+
   def initialize
-    require File.expand_path(File.dirname(__FILE__) + "/../../config/environment")
+    require_relative '../../config/environment'
     preload_i18n
 
     @bbcode_to_md = true if ARGV.include?('bbcode-to-md')
@@ -28,6 +34,7 @@ class ImportScripts::Base
     @existing_posts = {}
     @topic_lookup = {}
     @old_site_settings = {}
+    @start_time = Time.now
 
     puts "loading existing groups..."
     GroupCustomField.where(name: 'import_id').pluck(:group_id, :value).each do |group_id, import_id|
@@ -79,7 +86,8 @@ class ImportScripts::Base
     update_topic_count_replies
     reset_topic_counters
 
-    puts "", "Done"
+    elapsed = Time.now - @start_time
+    puts '', "Done (#{elapsed.to_s} seconds)"
 
   ensure
     reset_site_settings
@@ -220,10 +228,8 @@ class ImportScripts::Base
   # user in the original datasource. The given id will not be used to
   # create the Discourse user record.
   def create_users(results, opts={})
-    num_users_before = User.count
     users_created = 0
     users_skipped = 0
-    progress = 0
     total = opts[:total] || results.size
 
     results.each do |result|
@@ -269,20 +275,21 @@ class ImportScripts::Base
 
     bio_raw = opts.delete(:bio_raw)
     website = opts.delete(:website)
+    location = opts.delete(:location)
     avatar_url = opts.delete(:avatar_url)
 
     opts[:name] = User.suggest_name(opts[:email]) unless opts[:name]
     if opts[:username].blank? ||
-        opts[:username].length < User.username_length.begin ||
-        opts[:username].length > User.username_length.end ||
-        opts[:username] =~ /[^A-Za-z0-9_]/ ||
-        opts[:username][0] =~ /[^A-Za-z0-9]/ ||
-        !User.username_available?(opts[:username])
+      opts[:username].length < User.username_length.begin ||
+      opts[:username].length > User.username_length.end ||
+      opts[:username] =~ /[^A-Za-z0-9_]/ ||
+      opts[:username][0] =~ /[^A-Za-z0-9]/ ||
+      !User.username_available?(opts[:username])
       opts[:username] = UserNameSuggester.suggest(opts[:username] || opts[:name] || opts[:email])
     end
     opts[:email] = opts[:email].downcase
     opts[:trust_level] = TrustLevel[1] unless opts[:trust_level]
-    opts[:active] = true
+    opts[:active] = opts.fetch(:active, true)
     opts[:import_mode] = true
 
     u = User.new(opts)
@@ -296,6 +303,7 @@ class ImportScripts::Base
         if bio_raw.present? || website.present?
           u.user_profile.bio_raw = bio_raw if bio_raw.present?
           u.user_profile.website = website if website.present?
+          u.user_profile.location = location if location.present?
           u.user_profile.save!
         end
       end
@@ -322,6 +330,8 @@ class ImportScripts::Base
   def create_categories(results)
     results.each do |c|
       params = yield(c)
+
+      next if params.nil? # block returns nil to skip
 
       # Basic massaging on the category name
       params[:name] = "Blank" if params[:name].blank?
@@ -460,8 +470,8 @@ class ImportScripts::Base
   end
 
   def close_inactive_topics(opts={})
-    puts "", "Closing topics that have been inactive for more than #{num_days} days."
     num_days = opts[:days] || 30
+    puts '', "Closing topics that have been inactive for more than #{num_days} days."
 
     query = Topic.where('last_posted_at < ?', num_days.days.ago).where(closed: false)
     total_count = query.count
@@ -513,7 +523,7 @@ class ImportScripts::Base
   end
 
   def reset_topic_counters
-    puts "", "reseting topic counters"
+    puts "", "resetting topic counters"
 
     total_count = Topic.count
     progress_count = 0
@@ -550,6 +560,22 @@ class ImportScripts::Base
       progress_count += 1
       print_status(progress_count, total_count)
     end
+  end
+
+  def html_for_upload(upload, display_filename)
+    if FileHelper.is_image?(upload.url)
+      embedded_image_html(upload)
+    else
+      attachment_html(upload, display_filename)
+    end
+  end
+
+  def embedded_image_html(upload)
+    %Q[<img src="#{upload.url}" width="#{[upload.width, 640].compact.min}" height="#{[upload.height,480].compact.min}"><br/>]
+  end
+
+  def attachment_html(upload, display_filename)
+    "<a class='attachment' href='#{upload.url}'>#{display_filename}</a> (#{number_to_human_size(upload.filesize)})"
   end
 
   def print_status(current, max)

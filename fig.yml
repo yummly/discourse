@@ -11,7 +11,7 @@ redis:
   # command: redis-server --appendonly yes
 discourse:
   build: .
-  command: bash -c 'rm -f /opt/discourse/tmp/pids/server.pid && echo $RAILS_RELATIVE_URL_ROOT > /opt/discourse/tmp/root && bundle exec rails s'
+  command: bash -c 'rm -f /opt/discourse/tmp/pids/server.pid && echo ${RAILS_RELATIVE_URL_ROOT:-/} > /opt/discourse/tmp/root && bundle exec rails s'
   volumes:
     - .:/opt/discourse
   ports:
