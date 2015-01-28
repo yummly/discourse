@@ -4,8 +4,6 @@ This will use local postgres, redis, and nginx running in separate docker contai
 
 If you are running on linux, the server will listen on http://localhost. If you are on mac using boot2docker, you can find the server's ip address by doing `boot2docker ip`. You can access the rails application directly (bypassing nginx) by using port 3000 instead of 80.
 
-This configuration doesn't use nginx.
-
 1. [Install fig](http://www.fig.sh/install.html)
 2. Check `fig.yml`, you may need to edit it.
 3. `fig build`
