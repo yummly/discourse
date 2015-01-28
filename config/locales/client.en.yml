@@ -746,7 +746,7 @@ en:
 
     notifications:
       title: "notifications of @name mentions, replies to your posts and topics, private messages, etc"
-      none: "You have no notifications right now."
+      none: "Unable to load notifications at this time."
       more: "view older notifications"
       total_flagged: "total flagged posts"
       mentioned: "<i title='mentioned' class='icon'>@</i><p><span>{{username}}</span> {{description}}</p>"
@@ -819,6 +819,7 @@ en:
         posted: "You haven't posted in any topics yet."
         latest: "There are no latest topics. That's sad."
         hot: "There are no hot topics."
+        bookmarks: "You have no bookmarked topics yet."
         category: "There are no {{category}} topics."
         top: "There are no top topics."
         educate:
@@ -1465,6 +1466,9 @@ en:
       posted:
         title: "My Posts"
         help: "topics you have posted in"
+      bookmarks:
+        title: "Bookmarks"
+        help: "topics you have bookmarked"
       category:
         title:
           zero: "{{categoryName}}"
@@ -1633,8 +1637,8 @@ en:
         add_members: "Add members"
         custom: "Custom"
         automatic: "Automatic"
-        automatic_membership_email_domains: "Users registering with an email from that list will automatically be a member of this group"
-        automatic_membership_retroactive: "Registered users matching this list are also member of the group"
+        automatic_membership_email_domains: "Users who register with an email domain that exactly matches one in this list will be automatically added to this group:"
+        automatic_membership_retroactive: "Apply the same email domain rule to add existing registered users"
 
       api:
         generate_master: "Generate Master API Key"
@@ -2269,8 +2273,8 @@ en:
 
     badges:
       title: Badges
-      allow_title: "allow badge as title?"
-      multiple_grant: "awarded multiple times?"
+      allow_title: "can be used as a title"
+      multiple_grant: "can be awarded multiple times"
       badge_count:
         one:   "1 Badge"
         other: "%{count} Badges"
