@@ -6,7 +6,7 @@ MAINTAINER Vadim Geshel "vadim@yummly.com"
 RUN curl http://apt.postgresql.org/pub/repos/apt/ACCC4CF8.asc | apt-key add - &&\
     apt-get -y update &&\
     apt-get -y install build-essential locales \
-                       libxslt-dev libcurl4-openssl-dev \
+                       libxslt-dev libcurl4-openssl-dev openssl \
                        libssl-dev libyaml-dev libtool \
                        libxml2-dev gawk libpq-dev \
                        pngcrush imagemagick \
