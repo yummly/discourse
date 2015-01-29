@@ -100,7 +100,7 @@ class ApplicationController < ActionController::Base
     raise e if Rails.env.test?
 
     if request.get?
-      redirect_to "/"
+      redirect_to "#{Discourse.base_uri}/"
     else
       render status: 403, json: failed_json.merge(message: I18n.t(:not_logged_in))
     end
