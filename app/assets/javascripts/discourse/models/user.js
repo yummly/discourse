@@ -72,10 +72,9 @@ Discourse.User = Discourse.Model.extend({
     @type {String}
   **/
   profileBackground: function() {
-    var background = this.get('profile_background');
-    if(Em.isEmpty(background) || !Discourse.SiteSettings.allow_profile_backgrounds) { return; }
-
-    return 'background-image: url(' + background + ')';
+    var url = this.get('profile_background');
+    if (Em.isEmpty(url) || !Discourse.SiteSettings.allow_profile_backgrounds) { return; }
+    return 'background-image: url(' + Discourse.getURLWithCDN(url) + ')';
   }.property('profile_background'),
 
   /**
@@ -458,11 +457,8 @@ Discourse.User.reopenClass(Discourse.Singleton, {
             "/{size}/" +
             Discourse.LetterAvatarVersion + ".png";
     }
-    url = Discourse.getURL(url);
-    if (Discourse.CDN) {
-      url = Discourse.CDN + url;
-    }
-    return url;
+
+    return Discourse.getURLWithCDN(url);
   },
 
   /**
