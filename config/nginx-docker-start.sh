@@ -18,14 +18,4 @@ cat $discourse/config/nginx.sample.conf |
     sed "s|location / |location $root |" |
     sed 's/root \$public;/alias $public;/' > /etc/nginx/conf.d/discourse.conf
 
-if [[ ! -f /etc/nginx/nginx.crt ]]
-then
-    echo generating SSL certificate
-    apt-get -q update
-    apt-get -q install openssl
-    openssl req -x509 -nodes -days 365 -newkey rsa:2048 -subj '/C=US/ST=CA/L=San Francisco/O=discourse/OU=discourse.org' -keyout /etc/nginx/nginx.key -out /etc/nginx/nginx.crt
-else
-    echo using an existing SSL certificate
-fi
-
 exec nginx -g 'daemon off;'
