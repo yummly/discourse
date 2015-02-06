@@ -36,6 +36,68 @@
 </p>
 
 
+<% if @use_crawler_layout? %>
+  <div id="suggested-topics">
+    <h3><%= t :'suggested_topics.title' %></h3>
+    <div class="topics">
+      <% if @topic_view.suggested_topics %>
+        <table class="ember-view topic-list">
+          <thead>
+            <tr>
+              <th data-sort-order="default" class="default">Topic</th>
+              <th data-sort-order="category" class="category">Category</th>
+              <th data-sort-order="posts" class="posts num">Posts</th>
+              <th data-sort-order="views" class="views num">Views</th>
+              <th data-sort-order="activity" class="activity num">Activity</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @topic_view.suggested_topics do |topic| %>
+              <!-- FIXME: implement the piece below; move parts into partials -->
+              <tr class="topic-list-item">
+                <td class="main-link clearfix" colspan="1">
+                  <!-- template: topic-link -->
+                  <a href="/discuss/t/stock-or-broth/3069" class="title">Stock or Broth?</a>
+                  <span class="topic-post-badges">
+                    <a href="/discuss/t/stock-or-broth/3069" class="badge badge-notification new-topic" title="">new</a>
+                  </span>
+                </td>
+
+                <td class="category">
+                  <span class="badge-wrapper">
+                    <a class="badge-category-parent" style="background-color: #957449;" href="/discuss/c/cooking-advice"></a>
+                    <a href="/discuss/c/cooking-advice" data-drop-close="true" class="badge-category clear-badge" title="Questions about substitutions, recipe suggestions, advice on a technique, prep step, or other general cooking topics.">Cooking Advice</a>
+                  </span>
+                </td>
+
+                <td class="num posts-map posts heatmap-" title="This topic has 2 posts">
+                  <a href="" class="posts-map badge-posts heatmap-">2</a>
+                </td>
+
+                <td class="num views ">
+                  <span class="number" title="this topic has been viewed 16 times">16</span>
+                </td>
+
+                <td class="num age activity" title="First post: February 3, 2015 8:54am Last post: February 3, 2015 4:31pm">
+                  <a href="/discuss/t/stock-or-broth/3069/2">
+                    <span class="relative-date" title="February 3, 2015 4:31pm" data-time="1423009879143" data-format="tiny">
+                      2d
+                    </span>
+                  </a>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      <% else %>
+        <div class='alert alert-info'>
+          <%= t :'choose_topic.none_found' %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+<% end %>
+
 <% content_for :head do %>
   <%= auto_discovery_link_tag(@topic_view, {action: :feed, slug: @topic_view.topic.slug, topic_id: @topic_view.topic.id}, title: t('rss_posts_in_topic', topic: @topic_view.title), type: 'application/rss+xml') %>
   <%= crawlable_meta_data(title: @topic_view.title,
