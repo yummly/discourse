@@ -4,4 +4,12 @@ module CrawlerDetection
   def self.crawler?(user_agent)
     !/Googlebot|Mediapartners|AdsBot|curl|Twitterbot|facebookexternalhit|bingbot|Baiduspider|ia_archiver|Wayback Save Page/.match(user_agent).nil?
   end
+
+  def self.crawler_with_js?(user_agent)
+    !/Googlebot/.match(user_agent).nil?
+  end
+
+  def self.crawler_without_js?(user_agent)
+    crawler?(user_agent) && !crawler_with_js?(user_agent)
+  end
 end
