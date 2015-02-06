@@ -48,7 +48,7 @@ class ApplicationController < ActionController::Base
   end
 
   def use_crawler_layout?
-    @use_crawler_layout ||= (has_escaped_fragment? || CrawlerDetection.crawler?(request.user_agent))
+    @use_crawler_layout ||= (has_escaped_fragment? || CrawlerDetection.crawler_without_js?(request.user_agent))
   end
 
   def slow_platform?
